@@ -1,6 +1,8 @@
 mod parser;
+mod output;
 
 use parser::parse_game_input;
+use output::Move;
 
 fn main() {
     // This is a simple game loop that reads input and outputs moves
@@ -16,12 +18,18 @@ fn main() {
             
             // For Phase 1, output a dummy move
             // TODO: Implement actual move selection in later phases
-            println!("5 5");
+            let game_move = Move::new(5, 5);
+            
+            if let Err(e) = game_move.submit() {
+                eprintln!("Error submitting move: {}", e);
+            }
         }
         Err(e) => {
             eprintln!("Error parsing input: {}", e);
             // Output fallback move when parsing fails
-            println!("0 0");
+            if let Err(e) = Move::fallback().submit() {
+                eprintln!("Error submitting fallback move: {}", e);
+            }
         }
     }
 }
