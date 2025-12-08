@@ -2,6 +2,7 @@ mod parser;
 mod output;
 mod game_state;
 mod placement;
+mod utils;
 
 use parser::parse_game_input;
 use output::Move;
