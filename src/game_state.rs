@@ -151,7 +151,7 @@ impl Grid {
 }
 
 /// Represents a piece shape
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Shape {
     pub width: usize,
     pub height: usize,
