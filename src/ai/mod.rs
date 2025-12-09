@@ -7,6 +7,9 @@ pub mod evaluator;
 pub mod strategies;
 pub mod heuristics;
 pub mod advanced_strategies;
+pub mod optimization;
+pub mod optimized_evaluator;
+pub mod benchmark;
 
 use crate::game_state::GameState;
 use crate::placement::Placement;
