@@ -3,11 +3,13 @@ mod output;
 mod game_state;
 mod placement;
 mod utils;
+mod ai;
 
 use parser::parse_game_input;
 use output::Move;
 use game_state::{Grid, Shape, GameState};
-use placement::{validate_placement, find_all_valid_placements};
+use placement::find_all_valid_placements;
+use ai::select_move_default;
 
 fn main() {
     eprintln!("Starting Filler AI...");
@@ -47,18 +49,26 @@ fn main() {
             } else {
                 eprintln!("Found {} valid placements", valid_placements.len());
                 
-                // For Phase 3, just pick the first valid placement
-                // TODO: Implement smarter selection in Phase 4
-                let placement = &valid_placements[0];
-                let game_move = Move::new(placement.position.x, placement.position.y);
-                
-                eprintln!(
-                    "Selected placement at ({}, {}) - adds {} cells",
-                    placement.position.x, placement.position.y, placement.cells_added
-                );
-                
-                if let Err(e) = game_move.submit() {
-                    eprintln!("Error submitting move: {}", e);
+                // Use AI to select best placement
+                match select_move_default(&valid_placements, &game_state) {
+                    Some(placement) => {
+                        let game_move = Move::new(placement.position.x, placement.position.y);
+                        
+                        eprintln!(
+                            "AI selected placement at ({}, {}) - adds {} cells",
+                            placement.position.x, placement.position.y, placement.cells_added
+                        );
+                        
+                        if let Err(e) = game_move.submit() {
+                            eprintln!("Error submitting move: {}", e);
+                        }
+                    }
+                    None => {
+                        eprintln!("AI failed to select placement, using fallback");
+                        if let Err(e) = Move::fallback().submit() {
+                            eprintln!("Error submitting fallback move: {}", e);
+                        }
+                    }
                 }
             }
         }
