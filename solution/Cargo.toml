@@ -1,0 +1,38 @@
+[package]
+name = "filler"
+version = "0.1.0"
+edition = "2021"
+resolver = "2"
+
+[lib]
+name = "filler"
+path = "src/lib.rs"
+
+[[bin]]
+name = "filler"
+path = "src/main.rs"
+
+[[bin]]
+name = "visualizer"
+path = "src/bin/visualizer.rs"
+
+# Native GUI replay. Optional, only built with `--features gui`.
+[[bin]]
+name = "visualizer-gui"
+path = "src/bin/visualizer_gui.rs"
+required-features = ["gui"]
+
+[features]
+default = []
+gui = ["dep:eframe", "dep:rfd"]
+
+[dependencies]
+# Pinned to the 0.27 series for API stability. Only pulled in when the
+# `gui` feature is enabled, so the audit binary stays dependency-free.
+eframe = { version = "0.27", optional = true }
+rfd = { version = "0.14", optional = true }
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
