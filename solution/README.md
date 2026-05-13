@@ -92,9 +92,9 @@ cargo test
 The suite covers:
 
 - **Input parsing** — engine handshake line, Anfield header/dimensions, row prefix
-  stripping, piece header/dimensions, second-turn re-use of the player hint.
+stripping, piece header/dimensions, second-turn re-use of the player hint.
 - **Placement validation** — exactly-one-own-cell rule, opponent-overlap rejection,
-  two-own-overlap rejection, player 2 symbols, ignoring `.` cells of the piece.
+two-own-overlap rejection, player 2 symbols, ignoring `.` cells of the piece.
 - **Boundary detection** — out-of-bounds X/Y refused.
 - **Output formatting** — exact `X Y\n` shape (and `0 0\n` pass).
 - **End-to-end** — parsed turn → chosen placement is valid and within bounds.
@@ -121,9 +121,9 @@ If none exists, it emits `0 0\n` as a pass.
 The repository ships with two helper scripts:
 
 - `solution/audit.sh` — 5 games on each of `map00 vs wall_e`, `map01 vs h2_d2`,
-  `map02 vs bender`, alternating sides each game.
+`map02 vs bender`, alternating sides each game.
 - `solution/audit_terminator.sh` — same shape for the bonus terminator match
-  (`MAP=maps/map02 bash ./solution/audit_terminator.sh` to use the strong map).
+(`MAP=maps/map02 bash ./solution/audit_terminator.sh` to use the strong map).
 
 Run them from inside the container at `/filler`:
 
@@ -187,3 +187,4 @@ Recording a game log to feed the GUI (using the cross-platform docker helper):
 ```powershell
 .\docker-filler.ps1 -Command 'cd /filler/solution && cargo build --release && cd /filler && ./linux_game_engine -f maps/map02 -p1 ./solution/target/release/filler -p2 linux_robots/bender > ./solution/game.log'
 ```
+
